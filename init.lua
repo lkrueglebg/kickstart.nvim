@@ -127,8 +127,14 @@ require('lazy').setup({
         topdelete = { text = '‾' },
         changedelete = { text = '~' },
       },
+      current_line_blame = true,
+      current_line_blame_opts = { delay = 100, ignore_whitespace = true },
       on_attach = function(bufnr)
-        vim.keymap.set('n', '<leader>hp', require('gitsigns').preview_hunk, { buffer = bufnr, desc = 'Preview git hunk' })
+        vim.keymap.set('n', '<leader>gp', require('gitsigns').preview_hunk, { buffer = bufnr, desc = 'Preview hunk' })
+        vim.keymap.set('n', '<leader>gj', require('gitsigns').next_hunk, { buffer = bufnr, desc = 'Next hunk' })
+        vim.keymap.set('n', '<leader>gk', require('gitsigns').prev_hunk, { buffer = bufnr, desc = 'Previous hunk' })
+        vim.keymap.set('n', '<leader>gs', require('gitsigns').stage_hunk, { buffer = bufnr, desc = 'Stage hunk' })
+        vim.keymap.set('n', '<leader>gr', require('gitsigns').reset_hunk, { buffer = bufnr, desc = 'Stage hunk' })
 
         -- don't override the built-in and fugitive keymaps
         local gs = package.loaded.gitsigns
@@ -502,14 +508,13 @@ local on_attach = function(_, bufnr)
 end
 
 -- document existing key chains
--- require('which-key').register {
--- ['<leader>c'] = { name = '[C]ode', _ = 'which_key_ignore' },
--- ['<leader>d'] = { name = '[D]ocument', _ = 'which_key_ignore' },
--- ['<leader>g'] = { name = '[G]it', _ = 'which_key_ignore' },
--- ['<leader>h'] = { name = 'More git', _ = 'which_key_ignore' },
--- ['<leader>r'] = { name = '[R]ename', _ = 'which_key_ignore' },
--- ['<leader>s'] = { name = '[S]earch', _ = 'which_key_ignore' },
--- }
+require('which-key').register {
+  ['<leader>c'] = { name = '[C]ode', _ = 'which_key_ignore' },
+  ['<leader>d'] = { name = '[D]iagnositcs', _ = 'which_key_ignore' },
+  ['<leader>g'] = { name = '[G]it', _ = 'which_key_ignore' },
+  ['<leader>r'] = { name = '[R]ename', _ = 'which_key_ignore' },
+  ['<leader>s'] = { name = '[S]earch', _ = 'which_key_ignore' },
+}
 
 -- mason-lspconfig requires that these setup functions are called in this order
 -- before setting up the servers.
