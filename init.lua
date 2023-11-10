@@ -224,6 +224,7 @@ require('lazy').setup({
     },
     build = ':TSUpdate',
   },
+  'stevearc/oil.nvim',
 
   -- NOTE: Next Step on Your Neovim Journey: Add/Configure additional "plugins" for kickstart
   --       These are some example plugins that I've included in the kickstart repository.
@@ -249,6 +250,7 @@ vim.o.hlsearch = false
 
 -- tabs
 vim.o.tabstop = 4
+vim.o.softtabstop = 4
 vim.o.shiftwidth = 4
 vim.o.expandtab = true
 
@@ -327,6 +329,15 @@ vim.api.nvim_create_autocmd('TextYankPost', {
   group = highlight_group,
   pattern = '*',
 })
+
+-- [[ Configure Oil ]]
+-- See `:help oil`
+require('oil').setup({
+  default_file_explorer = true,
+  columns = { "icon" },
+
+})
+vim.keymap.set('n', '-', "<cmd>Oil<CR>", { desc = "Open Parent Directory" })
 
 -- [[ Configure Telescope ]]
 -- See `:help telescope` and `:help telescope.setup()`
