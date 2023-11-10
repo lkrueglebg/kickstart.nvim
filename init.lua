@@ -77,7 +77,19 @@ require('lazy').setup({
 
   'tpope/vim-sleuth', -- Detect tabstop and shiftwidth automatically
   'tpope/vim-abolish',
-  'stevearc/oil.nvim',
+  {
+    'stevearc/oil.nvim',
+    opts = {
+      default_file_explorer = true,
+      columns = { "icon" },
+      view_options = {
+        show_hidden = true,
+        is_always_hidden = function(name, bufnr)
+          return vim.startswith(name, '__')
+        end,
+      }
+    },
+  },
 
   -- NOTE: This is where your plugins related to LSP can be installed.
   --  The configuration is done below. Search for lspconfig to find it below.
@@ -358,6 +370,9 @@ vim.keymap.set('n', '<leader>x', "<cmd>confirm wq<CR>", { desc = 'Write->Quit' }
 vim.keymap.set('n', '<leader>X', "<cmd>wqa!<CR>", { desc = 'Write->QuitAll' })
 vim.keymap.set('n', '<leader>c', "<cmd>BufferKill<CR>", { desc = 'Close Buffer' })
 
+-- OIL Keymaps
+vim.keymap.set('n', '-', "<cmd>Oil<CR>", { desc = "Open Parent Directory" })
+
 -- Barbar tab management
 vim.keymap.set({ 'n', 'v' }, '<TAB>', '<cmd>BufferNext<CR>', { desc = 'Next Buffer' })
 vim.keymap.set({ 'n', 'v' }, '<S-TAB>', '<cmd>BufferPrevious<CR>', { desc = 'Previous Buffer' })
@@ -384,14 +399,6 @@ vim.api.nvim_create_autocmd('TextYankPost', {
   pattern = '*',
 })
 
--- [[ Configure Oil ]]
--- See `:help oil`
-require('oil').setup({
-  default_file_explorer = true,
-  columns = { "icon" },
-
-})
-vim.keymap.set('n', '-', "<cmd>Oil<CR>", { desc = "Open Parent Directory" })
 
 -- [[ Configure Telescope ]]
 -- See `:help telescope` and `:help telescope.setup()`
