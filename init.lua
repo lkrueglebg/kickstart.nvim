@@ -184,6 +184,16 @@ require('lazy').setup({
   },
 
   {
+    -- Setup tabline
+    'romgrk/barbar.nvim',
+    dependencies = {
+      'lewis6991/gitsigns.nvim', -- OPTIONAL: for git status
+      'nvim-tree/nvim-web-devicons', -- OPTIONAL: for file icons
+    },
+
+  },
+
+  {
     -- Add indentation guides even on blank lines
     'lukas-reineke/indent-blankline.nvim',
     -- Enable `lukas-reineke/indent-blankline.nvim`
@@ -305,13 +315,21 @@ vim.keymap.set('n', '<C-j>', '<C-w>j', { silent = true })
 vim.keymap.set('n', '<C-k>', '<C-w>k', { silent = true })
 vim.keymap.set('n', '<C-l>', '<C-w>l', { silent = true })
 
-
 -- Keymaps for window/buffer management
 vim.keymap.set('n', '<leader>w', "<cmd>w!<CR>", { desc = 'Write Buffer' })
 vim.keymap.set('n', '<leader>q', "<cmd>confirm q<CR>", { desc = 'Close Window' })
 vim.keymap.set('n', '<leader>x', "<cmd>confirm wq<CR>", { desc = 'Write->Quit' })
 vim.keymap.set('n', '<leader>X', "<cmd>wqa!<CR>", { desc = 'Write->QuitAll' })
 vim.keymap.set('n', '<leader>c', "<cmd>BufferKill<CR>", { desc = 'Close Buffer' })
+
+-- Barbar tab management
+vim.keymap.set({'n', 'v'}, '<TAB>', '<cmd>BufferNext<CR>', { desc = 'Next Buffer' })
+vim.keymap.set({'n', 'v'}, '<S-TAB>', '<cmd>BufferPrevious<CR>', { desc = 'Previous Buffer' })
+vim.keymap.set('n', '<leader>bp', '<cmd>BufferPin<CR>', { desc = 'Pin Buffer' })
+vim.keymap.set('n', '<leader>bc', '<cmd>BufferClose<CR>', { desc = 'Close Buffer' })
+vim.keymap.set('n', '<leader>br', '<cmd>BufferRestore<CR>', { desc = 'Restore Buffer' })
+vim.keymap.set('n', '<leader>bj', '<cmd>BufferPick<CR>', { desc = 'Pick Buffer' })
+vim.keymap.set('n', '<leader>ba', '<cmd>BufferCloseAllButCurrentOrPinned<CR>', { desc = 'Clean up [A]ll Buffers' })
 
 -- Diagnostic keymaps
 vim.keymap.set('n', '[d', vim.diagnostic.goto_prev, { desc = 'Go to previous diagnostic message' })
@@ -520,6 +538,7 @@ end
 
 -- document existing key chains
 require('which-key').register {
+  ['<leader>b'] = { name = '[B]uffer', _ = 'which_key_ignore' },
   ['<leader>c'] = { name = '[C]ode', _ = 'which_key_ignore' },
   ['<leader>d'] = { name = '[D]iagnositcs', _ = 'which_key_ignore' },
   ['<leader>g'] = { name = '[G]it', _ = 'which_key_ignore' },
