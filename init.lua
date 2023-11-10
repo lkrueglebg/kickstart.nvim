@@ -74,9 +74,10 @@ require('lazy').setup({
   'tpope/vim-rhubarb',
   'kdheepak/lazygit.nvim',
 
-  -- Detect tabstop and shiftwidth automatically
-  'tpope/vim-sleuth',
+
+  'tpope/vim-sleuth', -- Detect tabstop and shiftwidth automatically
   'tpope/vim-abolish',
+  'stevearc/oil.nvim',
 
   -- NOTE: This is where your plugins related to LSP can be installed.
   --  The configuration is done below. Search for lspconfig to find it below.
@@ -187,7 +188,7 @@ require('lazy').setup({
     -- Setup tabline
     'romgrk/barbar.nvim',
     dependencies = {
-      'lewis6991/gitsigns.nvim', -- OPTIONAL: for git status
+      'lewis6991/gitsigns.nvim',     -- OPTIONAL: for git status
       'nvim-tree/nvim-web-devicons', -- OPTIONAL: for file icons
     },
 
@@ -234,7 +235,6 @@ require('lazy').setup({
     },
     build = ':TSUpdate',
   },
-  'stevearc/oil.nvim',
 
   -- NOTE: Next Step on Your Neovim Journey: Add/Configure additional "plugins" for kickstart
   --       These are some example plugins that I've included in the kickstart repository.
@@ -323,8 +323,8 @@ vim.keymap.set('n', '<leader>X', "<cmd>wqa!<CR>", { desc = 'Write->QuitAll' })
 vim.keymap.set('n', '<leader>c', "<cmd>BufferKill<CR>", { desc = 'Close Buffer' })
 
 -- Barbar tab management
-vim.keymap.set({'n', 'v'}, '<TAB>', '<cmd>BufferNext<CR>', { desc = 'Next Buffer' })
-vim.keymap.set({'n', 'v'}, '<S-TAB>', '<cmd>BufferPrevious<CR>', { desc = 'Previous Buffer' })
+vim.keymap.set({ 'n', 'v' }, '<TAB>', '<cmd>BufferNext<CR>', { desc = 'Next Buffer' })
+vim.keymap.set({ 'n', 'v' }, '<S-TAB>', '<cmd>BufferPrevious<CR>', { desc = 'Previous Buffer' })
 vim.keymap.set('n', '<leader>bp', '<cmd>BufferPin<CR>', { desc = 'Pin Buffer' })
 vim.keymap.set('n', '<leader>bc', '<cmd>BufferClose<CR>', { desc = 'Close Buffer' })
 vim.keymap.set('n', '<leader>br', '<cmd>BufferRestore<CR>', { desc = 'Restore Buffer' })
