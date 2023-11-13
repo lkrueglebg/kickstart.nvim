@@ -72,8 +72,6 @@ require('lazy').setup({
   -- Git related plugins
   'tpope/vim-fugitive',
   'tpope/vim-rhubarb',
-  'kdheepak/lazygit.nvim',
-
 
   'tpope/vim-sleuth', -- Detect tabstop and shiftwidth automatically
   'tpope/vim-abolish',
@@ -297,7 +295,7 @@ require('lazy').setup({
 function _G.set_terminal_keymaps()
   local opts = {buffer = 0}
   vim.keymap.set('t', '<esc>', [[<C-\><C-n>]], opts)
-  vim.keymap.set('t', 'jk', [[<C-\><C-n>]], opts)
+  -- vim.keymap.set('t', 'jk', [[<C-\><C-n>]], opts)
   vim.keymap.set('t', '<C-h>', [[<Cmd>wincmd h<CR>]], opts)
   vim.keymap.set('t', '<C-j>', [[<Cmd>wincmd j<CR>]], opts)
   vim.keymap.set('t', '<C-k>', [[<Cmd>wincmd k<CR>]], opts)
@@ -481,7 +479,29 @@ vim.keymap.set('n', '<leader>sG', ':LiveGrepGitRoot<cr>', { desc = '[S]earch by 
 vim.keymap.set('n', '<leader>sd', require('telescope.builtin').diagnostics, { desc = '[S]earch [D]iagnostics' })
 vim.keymap.set('n', '<leader>sr', require('telescope.builtin').resume, { desc = '[S]earch [R]esume' })
 
-vim.keymap.set('n', '<leader>gg', '<cmd>LazyGit<CR>', { desc = 'Launch LazyGit' })
+
+function _G.lazygit_toggle()
+  local Terminal = require("toggleterm.terminal").Terminal
+  local lazygit = Terminal:new {
+    cmd = "lazygit",
+    hidden = true,
+    direction = "float",
+    float_opts = {
+      border = "none",
+      width = 100000,
+      height = 100000,
+    },
+    on_open = function(_)
+      vim.cmd "startinsert!"
+    end,
+    on_close = function(_) end,
+    count = 99,
+  }
+  lazygit:toggle()
+end
+
+vim.keymap.set('n', '<leader>gg', '<cmd>lua lazygit_toggle()<CR>', { desc = 'Launch LazyGit' })
+vim.cmd('autocmd! TermOpen term://* lua set_terminal_keymaps()')
 
 -- [[ Configure Treesitter ]]
 -- See `:help nvim-treesitter`
