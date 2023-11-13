@@ -173,13 +173,22 @@ require('lazy').setup({
     },
   },
 
+  -- {
+  --   -- Theme inspired by Atom
+  --   'navarasu/onedark.nvim',
+  --   priority = 1000,
+  --   config = function()
+  --     vim.cmd.colorscheme 'onedark'
+  --   end,
+  -- },
   {
-    -- Theme inspired by Atom
-    'navarasu/onedark.nvim',
+    'catppuccin/nvim',
+    name = 'catppuccin',
     priority = 1000,
+    flavour = 'mocha',
     config = function()
-      vim.cmd.colorscheme 'onedark'
-    end,
+      vim.cmd.colorscheme 'catppuccin'
+    end
   },
 
   {
@@ -605,7 +614,7 @@ require('mason-lspconfig').setup()
 local servers = {
   -- clangd = {},
   -- gopls = {},
-  -- pyright = {},
+  pyright = {},
   -- rust_analyzer = {},
   -- tsserver = {},
   -- html = { filetypes = { 'html', 'twig', 'hbs'} },
@@ -690,6 +699,15 @@ cmp.setup {
     { name = 'luasnip' },
   },
 }
+
+function TrimWhitespace()
+  -- Removes trailing whitespace from current buffer
+  -- Saves and restores cursor position from before call
+  vim.cmd("let cursor = winsaveview()")
+  vim.cmd("keeppatterns %s/\\s\\+$//e")
+  vim.cmd("call winrestview(cursor)")
+end
+vim.api.nvim_create_autocmd('BufWritePre', {callback=TrimWhitespace})
 
 -- The line beneath this is called `modeline`. See `:help modeline`
 -- vim: ts=2 sts=2 sw=2 et
