@@ -1,5 +1,4 @@
 --[[
-
 =====================================================================
 ==================== READ THIS BEFORE CONTINUING ====================
 =====================================================================
@@ -59,6 +58,7 @@ if not vim.loop.fs_stat(lazypath) then
   }
 end
 vim.opt.rtp:prepend(lazypath)
+vim.opt.guicursor = ""
 
 -- [[ Configure plugins ]]
 -- NOTE: Here is where you install your plugins.
@@ -68,6 +68,7 @@ vim.opt.rtp:prepend(lazypath)
 --    as they will be available in your neovim runtime.
 require('lazy').setup({
   -- NOTE: First, some plugins that don't require any configuration
+  'jiangmiao/auto-pairs',
 
   -- Git related plugins
   'tpope/vim-fugitive',
@@ -375,16 +376,16 @@ vim.keymap.set('n', '<leader>w', "<cmd>w!<CR>", { desc = 'Write Buffer' })
 vim.keymap.set('n', '<leader>q', "<cmd>confirm q<CR>", { desc = 'Close Window' })
 vim.keymap.set('n', '<leader>x', "<cmd>confirm wq<CR>", { desc = 'Write->Quit' })
 vim.keymap.set('n', '<leader>X', "<cmd>wqa!<CR>", { desc = 'Write->QuitAll' })
-vim.keymap.set('n', '<leader>c', "<cmd>BufferKill<CR>", { desc = 'Close Buffer' })
+vim.keymap.set('n', '<leader>c', '<cmd>BufferClose<CR>', { desc = 'Close Buffer' })
 
 -- OIL Keymaps
 vim.keymap.set('n', '-', "<cmd>Oil<CR>", { desc = "Open Parent Directory" })
 
 -- Barbar tab management
-vim.keymap.set({ 'n', 'v' }, '<TAB>', '<cmd>BufferNext<CR>', { desc = 'Next Buffer' })
-vim.keymap.set({ 'n', 'v' }, '<S-TAB>', '<cmd>BufferPrevious<CR>', { desc = 'Previous Buffer' })
+vim.keymap.set('n', '<leader>bn', '<cmd>BufferNext<CR>', { desc = 'Next Buffer' })
+vim.keymap.set('n', '<leader>bb', '<cmd>BufferPrevious<CR>', { desc = 'Previous Buffer' })
 vim.keymap.set('n', '<leader>bp', '<cmd>BufferPin<CR>', { desc = 'Pin Buffer' })
-vim.keymap.set('n', '<leader>bc', '<cmd>BufferClose<CR>', { desc = 'Close Buffer' })
+vim.keymap.set('n', '<leader>bc', '<cmd>BufferPickDelete<CR>', { desc = 'Close Buffer' })
 vim.keymap.set('n', '<leader>br', '<cmd>BufferRestore<CR>', { desc = 'Restore Buffer' })
 vim.keymap.set('n', '<leader>bj', '<cmd>BufferPick<CR>', { desc = 'Pick Buffer' })
 vim.keymap.set('n', '<leader>ba', '<cmd>BufferCloseAllButCurrentOrPinned<CR>', { desc = 'Clean up [A]ll Buffers' })
