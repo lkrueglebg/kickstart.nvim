@@ -211,6 +211,12 @@ require('lazy').setup({
       'lewis6991/gitsigns.nvim',     -- OPTIONAL: for git status
       'nvim-tree/nvim-web-devicons', -- OPTIONAL: for file icons
     },
+    opts = {
+      animation = false,
+      auto_hide=1,
+      insert_at_end = true,
+      semantic_letters = true,
+    }
 
   },
 
@@ -385,9 +391,11 @@ vim.keymap.set('n', '-', "<cmd>Oil<CR>", { desc = "Open Parent Directory" })
 vim.keymap.set('n', '<leader>bn', '<cmd>BufferNext<CR>', { desc = 'Next Buffer' })
 vim.keymap.set('n', '<leader>bb', '<cmd>BufferPrevious<CR>', { desc = 'Previous Buffer' })
 vim.keymap.set('n', '<leader>bp', '<cmd>BufferPin<CR>', { desc = 'Pin Buffer' })
-vim.keymap.set('n', '<leader>bc', '<cmd>BufferPickDelete<CR>', { desc = 'Close Buffer' })
-vim.keymap.set('n', '<leader>br', '<cmd>BufferRestore<CR>', { desc = 'Restore Buffer' })
 vim.keymap.set('n', '<leader>bj', '<cmd>BufferPick<CR>', { desc = 'Pick Buffer' })
+vim.keymap.set('n', '<leader>bc', '<cmd>BufferPickDelete<CR>', { desc = 'Close Buffer' })
+vim.keymap.set('n', '<leader>bh', '<cmd>BufferCloseBuffersLeft<CR>', { desc = 'Close Buffers to left' })
+vim.keymap.set('n', '<leader>bl', '<cmd>BufferCloseBuffersRight<CR>', { desc = 'Close Buffers to right' })
+vim.keymap.set('n', '<leader>br', '<cmd>BufferRestore<CR>', { desc = 'Restore Buffer' })
 vim.keymap.set('n', '<leader>ba', '<cmd>BufferCloseAllButCurrentOrPinned<CR>', { desc = 'Clean up [A]ll Buffers' })
 
 -- Diagnostic keymaps
