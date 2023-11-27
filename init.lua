@@ -216,6 +216,7 @@ require('lazy').setup({
       auto_hide=1,
       insert_at_end = true,
       semantic_letters = true,
+      exclude_ft = {'qf'}
     }
 
   },
