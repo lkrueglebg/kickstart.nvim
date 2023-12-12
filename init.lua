@@ -330,6 +330,7 @@ vim.o.expandtab = true
 -- Make line numbers default
 vim.o.number = true
 vim.o.relativenumber = true
+vim.o.scrolloff = 10
 
 -- Enable mouse mode
 vim.o.mouse = 'a'
@@ -479,6 +480,9 @@ vim.keymap.set('n', '<leader>/', function()
     previewer = false,
   })
 end, { desc = '[/] Fuzzy search in current buffer' })
+vim.keymap.set('n', 'n', 'nzz')
+vim.keymap.set('n', 'N', 'Nzz')
+
 
 vim.keymap.set('n', '<leader>sb', require('telescope.builtin').buffers, { desc = '[S]earch [B]uffers' })
 vim.keymap.set('n', '<leader>sg', require('telescope.builtin').git_files, { desc = '[S]earch [G]it Files' })
