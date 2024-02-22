@@ -352,8 +352,12 @@ require('lazy').setup({
           { name = "System" },
         },
       },
-    }
-
+    },
+  },
+  -- Currently can't quite get this to work, potentially need to try a different plugin
+  {
+    'https://codeberg.org/esensar/nvim-dev-container',
+    dependencies = {'nvim-treesitter/nvim-treesitter'},
   },
 
 
@@ -371,6 +375,10 @@ require('lazy').setup({
   --    For additional information see: https://github.com/folke/lazy.nvim#-structuring-your-plugins
   { import = 'custom.plugins' },
 }, {})
+
+require("devcontainer").setup{
+  compose_command = "ds compose"
+}
 
 function _G.set_terminal_keymaps()
   local opts = { buffer = 0 }
