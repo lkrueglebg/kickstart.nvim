@@ -79,6 +79,9 @@ require('lazy').setup({
   {
     'stevearc/oil.nvim',
     opts = {
+      keymaps = {
+        ["q"] = "actions.close",
+      },
       default_file_explorer = true,
       columns = { "icon" },
       view_options = {
@@ -213,10 +216,10 @@ require('lazy').setup({
     },
     opts = {
       animation = false,
-      auto_hide=1,
+      auto_hide = 1,
       insert_at_end = true,
       semantic_letters = true,
-      exclude_ft = {'qf'}
+      exclude_ft = { 'qf' }
     }
 
   },
@@ -317,7 +320,7 @@ require('lazy').setup({
     "epwalsh/pomo.nvim",
     version = "*",
     lazy = true,
-    cmd = {"TimerStart", "TimerRepeat"},
+    cmd = { "TimerStart", "TimerRepeat" },
     dependencies = {
       "rcarriga/nvim-notify",
     },
@@ -382,11 +385,11 @@ require('lazy').setup({
   --    Uncomment the following line and add your plugins to `lua/custom/plugins/*.lua` to get going.
   --
   --    For additional information see: https://github.com/folke/lazy.nvim#-structuring-your-plugins
-  -- { import = 'custom.plugins' },
+  { import = 'custom.plugins' },
 }, {})
 
 function _G.set_terminal_keymaps()
-  local opts = {buffer = 0}
+  local opts = { buffer = 0 }
   -- vim.keymap.set('t', '<esc>', [[<C-\><C-n>]], opts)
   vim.keymap.set('t', 'JK', [[<C-\><C-n>]], opts)
   vim.keymap.set('t', '<C-h>', [[<Cmd>wincmd h<CR>]], opts)
@@ -594,7 +597,7 @@ function _G.lazygit_toggle()
     on_open = function(_)
       vim.cmd "startinsert!"
     end,
-    on_close = function(_) end,
+    on_close = function(_) vim.cmd 'checkt' end,
     count = 99,
   }
   lazygit:toggle()
@@ -827,7 +830,8 @@ function TrimWhitespace()
   vim.cmd("keeppatterns %s/\\s\\+$//e")
   vim.cmd("call winrestview(cursor)")
 end
-vim.api.nvim_create_autocmd('BufWritePre', {callback=TrimWhitespace})
+
+vim.api.nvim_create_autocmd('BufWritePre', { callback = TrimWhitespace })
 
 -- The line beneath this is called `modeline`. See `:help modeline`
 -- vim: ts=2 sts=2 sw=2 et
