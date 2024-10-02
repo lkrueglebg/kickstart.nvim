@@ -520,6 +520,7 @@ local on_attach = function(_, bufnr)
   nmap('gd', require('telescope.builtin').lsp_definitions, '[G]oto [D]efinition')
   nmap('gr', require('telescope.builtin').lsp_references, '[G]oto [R]eferences')
   nmap('gI', require('telescope.builtin').lsp_implementations, '[G]oto [I]mplementation')
+  nmap('gT', require('telescope.builtin').lsp_type_definitions, '[G]oto [T]ype')
   -- nmap('<leader>D', require('telescope.builtin').lsp_type_definitions, 'Type [D]efinition')
   nmap('<leader>ss', require('telescope.builtin').lsp_dynamic_workspace_symbols, '[S]earch Workspace [S]ymbols')
 
@@ -559,16 +560,16 @@ require('mason-lspconfig').setup()
 local servers = {
   -- clangd = {},
   -- gopls = {},
-  jedi_language_server = {},
-  -- pyright = {
-  --   settings= {
-  --     python = {
-  --       analysis = {
-  --         extraPaths = {}
-  --       }
-  --     }
-  --   }
-  -- },
+  -- jedi_language_server = {},
+  pyright = {
+    settings= {
+      python = {
+        analysis = {
+          extraPaths = {}
+        }
+      }
+    }
+  },
   -- rust_analyzer = {},
   -- tsserver = {},
   -- html = { filetypes = { 'html', 'twig', 'hbs'} },
