@@ -279,6 +279,20 @@ require('lazy').setup({
   --   },
   --
   -- },
+  {
+    "nvim-neo-tree/neo-tree.nvim",
+    branch = "v3.x",
+    dependencies = {
+      "nvim-lua/plenary.nvim",
+      "nvim-tree/nvim-web-devicons", -- not strictly required, but recommended
+      "MunifTanjim/nui.nvim",
+      -- {"3rd/image.nvim", opts = {}}, -- Optional image support in preview window: See `# Preview Mode` for more information
+    },
+    lazy = false, -- neo-tree will lazily load itself
+    opts = {
+      -- fill any relevant options here
+    },
+  },
 
   { import = 'custom.plugins' },
 }, {})
@@ -371,6 +385,7 @@ vim.keymap.set('n', '<leader>c', '<cmd>BufferClose<CR>', { desc = 'Close Buffer'
 
 -- OIL Keymaps
 vim.keymap.set('n', '-', "<cmd>Oil<CR>", { desc = "Open Parent Directory" })
+vim.keymap.set('n', '<leader>-', "<cmd>Neotree reveal=true<CR>", { desc = "Reveal current file in tree"})
 
 -- Barbar tab management
 vim.keymap.set('n', '<leader>bn', '<cmd>BufferNext<CR>', { desc = 'Next Buffer' })
@@ -535,19 +550,25 @@ local on_attach = function(_, bufnr)
 end
 
 -- document existing key chains
-require('which-key').register {
-  ['<leader>b'] = { name = '[B]uffer', _ = 'which_key_ignore' },
-  ['<leader>c'] = { name = '[C]ode', _ = 'which_key_ignore' },
-  ['<leader>d'] = { name = '[D]iagnositcs', _ = 'which_key_ignore' },
-  ['<leader>g'] = { name = '[G]it', _ = 'which_key_ignore' },
-  ['<leader>r'] = { name = '[R]ename', _ = 'which_key_ignore' },
-  ['<leader>s'] = { name = '[S]earch', _ = 'which_key_ignore' },
+require('which-key').add {
+  { "<leader>b", group = "[B]uffer" },
+  { "<leader>b_", hidden = true },
+  { "<leader>c", group = "[C]ode" },
+  { "<leader>c_", hidden = true },
+  { "<leader>d", group = "[D]iagnositcs" },
+  { "<leader>d_", hidden = true },
+  { "<leader>g", group = "[G]it" },
+  { "<leader>g_", hidden = true },
+  { "<leader>r", group = "[R]ename" },
+  { "<leader>r_", hidden = true },
+  { "<leader>s", group = "[S]earch" },
+  { "<leader>s_", hidden = true },
 }
 
 -- mason-lspconfig requires that these setup functions are called in this order
 -- before setting up the servers.
 require('mason').setup()
-require('mason-lspconfig').setup()
+require('mason-lspconfig').setup { }
 
 -- Enable the following language servers
 --  Feel free to add/remove any LSPs that you want here. They will automatically be installed.
@@ -561,6 +582,7 @@ local servers = {
   -- clangd = {},
   -- gopls = {},
   -- jedi_language_server = {},
+  -- NOTE: Make sure to install the new version of node via `nvm` if pyright crashes
   pyright = {
     settings= {
       python = {
@@ -570,6 +592,13 @@ local servers = {
       }
     }
   },
+  -- basedpyright = {
+  --   settings = {
+  --     basedpyright = {
+  --       pythonVersion = "3.8"
+  --     }
+  --   }
+  -- },
   -- rust_analyzer = {},
   -- tsserver = {},
   -- html = { filetypes = { 'html', 'twig', 'hbs'} },
@@ -595,18 +624,6 @@ local mason_lspconfig = require 'mason-lspconfig'
 mason_lspconfig.setup {
   ensure_installed = vim.tbl_keys(servers),
 }
-
-mason_lspconfig.setup_handlers {
-  function(server_name)
-    require('lspconfig')[server_name].setup {
-      capabilities = capabilities,
-      on_attach = on_attach,
-      settings = servers[server_name],
-      filetypes = (servers[server_name] or {}).filetypes,
-    }
-  end,
-}
-
 
 function TrimWhitespace()
   -- Removes trailing whitespace from current buffer

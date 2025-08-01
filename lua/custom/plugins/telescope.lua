@@ -1,4 +1,5 @@
 -- Fuzzy Finder (files, lsp, etc)
+-- Make sure to install: fd, fzf, ripgrep
 
 local function live_grep_with_src()
   local cwd = vim.fn.getcwd()
